@@ -31,5 +31,50 @@ namespace EstateAgency.API.Services
             var rentAnnouncementModel = _mapper.Map<RentAnnouncementModel>(rentAnnouncementDto);
             return new OkObjectResult(rentAnnouncementModel);
         }
+
+        public IActionResult ComposeForCreate(int statusCode, RentAnnouncementCreateDto rentAnnouncementCreateDto)
+        {
+            switch (statusCode)
+            {
+                case -1:
+                    return new BadRequestObjectResult("Invalid apartment owner id.");
+                case -2:
+                    return new BadRequestObjectResult("Invalid apartment id.");
+                case -3:
+                    return new BadRequestObjectResult("Invalid rent value.");
+                case -4:
+                    return new BadRequestObjectResult("Invalid rent period value.");
+                default:
+                    return new CreatedAtRouteResult("GetRentAnnouncement", new { Id = statusCode }, rentAnnouncementCreateDto);
+            }
+        }
+
+        public IActionResult ComposeForUpdate(int statusCode)
+        {
+            switch (statusCode)
+            {
+                case -1:
+                    return new BadRequestObjectResult("Invalid apartment owner id.");
+                case -2:
+                    return new BadRequestObjectResult("Invalid apartment id.");
+                case -3:
+                    return new BadRequestObjectResult("Invalid rent value.");
+                case -4:
+                    return new BadRequestObjectResult("Invalid rent period value.");
+                default:
+                    return new OkResult();
+            }
+        }
+
+        public IActionResult ComposeForDelete(int statusCode)
+        {
+            switch (statusCode)
+            {
+                case -5:
+                    return new NotFoundResult();
+                default:
+                    return new NoContentResult();
+            }
+        }
     }
 }

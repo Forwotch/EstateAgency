@@ -33,6 +33,8 @@ namespace EstateAgency.API
 
             services.AddScoped<IRentAnnouncementService, RentAnnouncementService>();
             services.AddScoped<IRentAnnouncementResponseComposer, RentAnnouncementResponseComposer>();
+            services.AddScoped<IRentAnnouncementExpressionComposer, RentAnnouncementExpressionComposer>();
+            services.AddScoped<IRentAnnouncementCreator, RentAnnouncementCreator>();
             
             RegisterSwagger(services);
             services.AddAutoMapper();
@@ -61,6 +63,8 @@ namespace EstateAgency.API
                     Title = "Estate Agency API",
                     Version = "v1"
                 });
+                c.IncludeXmlComments(
+                    @"bin\Debug\netcoreapp2.0\EstateAgency.API.xml");
             });
 
             return services;

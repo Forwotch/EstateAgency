@@ -18,6 +18,8 @@ namespace EstateAgency.API.MappingConfigurations
                 .ForPath(dst => dst.ApartmentOwnerInfo.FirstName, src => src.MapFrom(rad => rad.OwnerFirstName))
                 .ForPath(dst => dst.ApartmentOwnerInfo.LastName, src => src.MapFrom(rad => rad.OwnerLastName))
                 .ForPath(dst => dst.ApartmentOwnerInfo.PhoneNumber, src => src.MapFrom(rad => rad.OwnerPhoneNumber));
+            CreateMap<RentAnnouncementAddOrUpdateModel, RentAnnouncementCreateDto>();
+            CreateMap<RentAnnouncementAddOrUpdateModel, RentAnnouncementUpdateDto>();
         }
     }
 }

@@ -8,5 +8,8 @@ namespace EstateAgency.API.Services
     {
         IActionResult Compose(IEnumerable<RentAnnouncementDto> rentAnnouncementDtos);
         IActionResult Compose(RentAnnouncementDto rentAnnouncementDto);
+        IActionResult ComposeForCreate(int statusCode, RentAnnouncementCreateDto rentAnnouncementCreateDto);
+        IActionResult ComposeForUpdate(int statusCode);
+        IActionResult ComposeForDelete(int statusCode);
     }
 }

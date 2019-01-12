@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using EstateAgency.DAL.EF;
@@ -18,11 +19,11 @@ namespace EstateAgency.DAL.Repositories
         }
 
         public abstract Task<TEntity> GetAsync(int id);
-        public abstract Task<IEnumerable<TEntity>> GetAllAsync();
-        public abstract Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
+        public abstract IQueryable<TEntity> GetAll();
         public abstract void Delete(int id);
         public abstract Task AddAsync(TEntity entity);
         public abstract void Update(TEntity entity);
+        public abstract Task<bool> ContainsEntityWithId(int id);
 
         public void Dispose()
         {

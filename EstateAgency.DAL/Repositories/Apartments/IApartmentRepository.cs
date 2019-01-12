@@ -1,4 +1,5 @@
-﻿using EstateAgency.DAL.Entities;
+﻿using System.Threading.Tasks;
+using EstateAgency.DAL.Entities;
 
 namespace EstateAgency.DAL.Repositories.Apartments
 {

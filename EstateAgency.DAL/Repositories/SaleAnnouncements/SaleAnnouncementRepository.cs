@@ -18,28 +18,19 @@ namespace EstateAgency.DAL.Repositories.SaleAnnouncements
             _saleAnnouncements = DbContext.SaleAnnouncements;
         }
 
-        public override async Task<IEnumerable<SaleAnnouncement>> GetAllAsync()
+        public override IQueryable<SaleAnnouncement> GetAll()
         {
-            return await _saleAnnouncements
-                .Include(a => a.ApartmentOwner)
-                .Include(a => a.Apartment)
-                .ToListAsync();
+            return _saleAnnouncements
+                .Include(sa => sa.ApartmentOwner)
+                .Include(sa => sa.Apartment);
         }
 
         public override async Task<SaleAnnouncement> GetAsync(int id)
         {
             return await _saleAnnouncements
-                .Include(a => a.ApartmentOwner)
-                .Include(a => a.Apartment)
-                .FirstOrDefaultAsync(a => a.Id == id);
-        }
-
-        public override async Task<IEnumerable<SaleAnnouncement>> FindAsync(Expression<Func<SaleAnnouncement, bool>> predicate)
-        {
-            return await _saleAnnouncements.Where(predicate)
-                .Include(a => a.ApartmentOwner)
-                .Include(a => a.Apartment)
-                .ToListAsync();
+                .Include(sa => sa.ApartmentOwner)
+                .Include(sa => sa.Apartment)
+                .FirstOrDefaultAsync(sa => sa.Id == id);
         }
 
         public override async Task AddAsync(SaleAnnouncement entity)
@@ -56,6 +47,11 @@ namespace EstateAgency.DAL.Repositories.SaleAnnouncements
         public override void Update(SaleAnnouncement entity)
         {
             _saleAnnouncements.Update(entity);
+        }
+
+        public override async Task<bool> ContainsEntityWithId(int id)
+        {
+            return await _saleAnnouncements.AnyAsync(sa => sa.Id == id);
         }
     }
 }

@@ -18,12 +18,11 @@ namespace EstateAgency.DAL.Repositories.Apartments
             _apartments = DbContext.Apartments;
         }
 
-        public override async Task<IEnumerable<Apartment>> GetAllAsync()
+        public override IQueryable<Apartment> GetAll()
         {
-            return await _apartments
+            return _apartments
                 .Include(a => a.ApartmentOwner)
-                .Include(a => a.Announcements)
-                .ToListAsync();
+                .Include(a => a.Announcements);
         }
 
         public override async Task<Apartment> GetAsync(int id)
@@ -32,15 +31,6 @@ namespace EstateAgency.DAL.Repositories.Apartments
                 .Include(a => a.ApartmentOwner)
                 .Include(a => a.Announcements)
                 .FirstOrDefaultAsync(a => a.Id == id);
-        }
-
-        public override async Task<IEnumerable<Apartment>> FindAsync(Expression<Func<Apartment, bool>> predicate)
-        {
-            return await _apartments
-                .Where(predicate)
-                .Include(a => a.ApartmentOwner)
-                .Include(a => a.Announcements)
-                .ToListAsync();
         }
 
         public override async Task AddAsync(Apartment entity)
@@ -57,6 +47,11 @@ namespace EstateAgency.DAL.Repositories.Apartments
         public override void Update(Apartment entity)
         {
             _apartments.Update(entity);
+        }
+
+        public override async Task<bool> ContainsEntityWithId(int id)
+        {
+            return await _apartments.AnyAsync(a => a.Id == id);
         }
     }
 }
