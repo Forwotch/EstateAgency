@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EstateAgency.API.Models;
+using EstateAgency.API.Models.Announcements;
 using EstateAgency.BLL.RentAnnouncements;
 
 namespace EstateAgency.API.MappingConfigurations

@@ -1,4 +1,4 @@
-﻿namespace EstateAgency.API.Models
+﻿namespace EstateAgency.API.Models.Announcements
 {
     public class ApartmentInfoInAnnouncementModel
     {

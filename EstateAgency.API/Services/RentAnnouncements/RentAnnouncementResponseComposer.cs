@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
 using EstateAgency.API.Models;
+using EstateAgency.API.Models.Announcements;
 using EstateAgency.BLL.RentAnnouncements;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EstateAgency.API.Services
+namespace EstateAgency.API.Services.RentAnnouncements
 {
     public class RentAnnouncementResponseComposer : IRentAnnouncementResponseComposer
     {
@@ -15,13 +16,13 @@ namespace EstateAgency.API.Services
             _mapper = mapper;
         }
 
-        public IActionResult Compose(IEnumerable<RentAnnouncementDto> rentAnnouncementDtos)
+        public IActionResult ComposeForGetAll(IEnumerable<RentAnnouncementDto> rentAnnouncementDtos)
         {
             var rentAnnouncementModels = _mapper.Map<IEnumerable<RentAnnouncementModel>>(rentAnnouncementDtos);
             return new OkObjectResult(rentAnnouncementModels);
         }
 
-        public IActionResult Compose(RentAnnouncementDto rentAnnouncementDto)
+        public IActionResult ComposeForGet(RentAnnouncementDto rentAnnouncementDto)
         {
             if (rentAnnouncementDto == null)
             {

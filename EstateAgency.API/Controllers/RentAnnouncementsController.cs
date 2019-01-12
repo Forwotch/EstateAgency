@@ -4,6 +4,8 @@ using EstateAgency.BLL.RentAnnouncements.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using EstateAgency.API.Models;
+using EstateAgency.API.Models.Announcements;
+using EstateAgency.API.Services.RentAnnouncements;
 using EstateAgency.BLL.RentAnnouncements;
 
 namespace EstateAgency.API.Controllers
@@ -38,7 +40,7 @@ namespace EstateAgency.API.Controllers
         public async Task<IActionResult> GetAsync(int id)
         {
             var rentAnnouncementDto = await _rentAnnouncementService.GetAsync(id);
-            var response = _rentAnnouncementResponseComposer.Compose(rentAnnouncementDto);
+            var response = _rentAnnouncementResponseComposer.ComposeForGet(rentAnnouncementDto);
             return response;
         }
 
@@ -47,7 +49,7 @@ namespace EstateAgency.API.Controllers
         {
             var expression = _rentAnnouncementExpressionComposer.Compose(maxPrice, numberOfRooms, adress);
             var rentAnnouncementDtos = await _rentAnnouncementService.FindAsync(expression);
-            var response = _rentAnnouncementResponseComposer.Compose(rentAnnouncementDtos);
+            var response = _rentAnnouncementResponseComposer.ComposeForGetAll(rentAnnouncementDtos);
             return response;
         }
 
