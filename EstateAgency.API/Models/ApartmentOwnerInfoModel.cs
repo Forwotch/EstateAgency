@@ -1,6 +1,6 @@
-﻿namespace EstateAgency.API.Models.Announcements
+﻿namespace EstateAgency.API.Models
 {
-    public class ApartmentOwnerInfoInAnnouncementModel
+    public class ApartmentOwnerInfoModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

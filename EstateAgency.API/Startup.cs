@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using EstateAgency.API.Services;
+using EstateAgency.API.Services.Apartments;
 using EstateAgency.API.Services.RentAnnouncements;
 using EstateAgency.API.Services.SaleAnnouncements;
+using EstateAgency.BLL.Apartments.Services;
 using EstateAgency.BLL.RentAnnouncements.Services;
 using EstateAgency.BLL.SaleAnnouncements.Services;
 using EstateAgency.DAL.EF;
@@ -38,11 +40,15 @@ namespace EstateAgency.API
             services.AddScoped<IRentAnnouncementResponseComposer, RentAnnouncementResponseComposer>();
             services.AddScoped<IRentAnnouncementExpressionComposer, RentAnnouncementExpressionComposer>();
             services.AddScoped<IRentAnnouncementCreator, RentAnnouncementCreator>();
+
             services.AddScoped<ISaleAnnouncementService, SaleAnnouncementService>();
             services.AddScoped<ISaleAnnouncementResponseComposer, SaleAnnouncementResponseComposer>();
             services.AddScoped<ISaleAnnouncementExpressionComposer, SaleAnnouncementExpressionComposer>();
             services.AddScoped<ISaleAnnouncementCreator, SaleAnnouncementCreator>();
 
+            services.AddScoped<IApartmentService, ApartmentService>();
+            services.AddScoped<IApartmentResponseComposer, ApartmentResponseComposer>();
+            services.AddScoped<IApartmentCreator, ApartmentCreator>();
 
             RegisterSwagger(services);
             services.AddAutoMapper();
