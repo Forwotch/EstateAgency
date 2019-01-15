@@ -4,14 +4,19 @@ using EstateAgency.API.Services.ApartmentOwners;
 using EstateAgency.API.Services.Apartments;
 using EstateAgency.API.Services.RentAnnouncements;
 using EstateAgency.API.Services.SaleAnnouncements;
+using EstateAgency.Authentification;
+using EstateAgency.Authentification.Services;
 using EstateAgency.BLL.ApartmentOwners.Services;
 using EstateAgency.BLL.Apartments.Services;
 using EstateAgency.BLL.RentAnnouncements.Services;
 using EstateAgency.BLL.SaleAnnouncements.Services;
 using EstateAgency.DAL.EF;
 using EstateAgency.DAL.UnitOfWork;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,6 +41,7 @@ namespace EstateAgency.API
                 option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("EstateAgency")));
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IRentAnnouncementService, RentAnnouncementService>();
@@ -55,6 +61,24 @@ namespace EstateAgency.API
             services.AddScoped<IApartmentOwnerService, ApartmentOwnerService>();
             services.AddScoped<IApartmentOwnerResponseComposer, ApartmentOwnerResponseComposer>();
 
+            services.AddScoped<IAuthentificationService, AuthentificationService>();
+            //services.AddScoped<RoleManager<IdentityRole>>();
+            //services.AddScoped<UserManager<User>>();
+            //services.AddScoped<SignInManager<User>>();
+            //services.AddScoped<IUserStore<User>, UserStore<User>>();
+
+            services.AddDbContext<IdentityContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("EstateAgencyAuthentification")));
+
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<IdentityContext>();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => //CookieAuthenticationOptions
+                {
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                });
+
             RegisterSwagger(services);
             services.AddAutoMapper();
         }
@@ -66,6 +90,8 @@ namespace EstateAgency.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseAuthentication();
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Estate Agency API v1"));
