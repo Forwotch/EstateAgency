@@ -5,6 +5,7 @@ using EstateAgency.API.Services.SaleAnnouncements;
 using EstateAgency.BLL.RentAnnouncements;
 using EstateAgency.BLL.SaleAnnouncements;
 using EstateAgency.BLL.SaleAnnouncements.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EstateAgency.API.Controllers
@@ -53,6 +54,7 @@ namespace EstateAgency.API.Controllers
             return response;
         }
 
+        [Authorize(Roles = "user")]
         [HttpPost]
         public async Task<IActionResult> AddAsync([FromBody] SaleAnnouncementAddOrUpdateModel saleAnnouncementAddOrUpdateModel)
         {
@@ -67,6 +69,7 @@ namespace EstateAgency.API.Controllers
             return response;
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateAsync(int? id, [FromBody] SaleAnnouncementAddOrUpdateModel saleAnnouncementAddOrUpdateModel)
         {
@@ -93,7 +96,8 @@ namespace EstateAgency.API.Controllers
             }
         }
 
-        [HttpDelete]
+        [Authorize(Roles = "admin")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var statusCode = await _saleAnnouncementService.DeleteAsync(id);

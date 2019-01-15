@@ -11,6 +11,7 @@ using EstateAgency.API.Services.RentAnnouncements;
 using EstateAgency.BLL.Apartments;
 using EstateAgency.BLL.Apartments.Services;
 using EstateAgency.BLL.RentAnnouncements;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EstateAgency.API.Controllers
 {
@@ -29,6 +30,7 @@ namespace EstateAgency.API.Controllers
             _apartmentResponseComposer = apartmentResponseComposer;
         }
 
+        [Authorize(Roles = "user")]
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
@@ -37,6 +39,7 @@ namespace EstateAgency.API.Controllers
             return response;
         }
 
+        [Authorize(Roles = "user")]
         [HttpGet("{id}", Name = "GetApartment")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -47,6 +50,7 @@ namespace EstateAgency.API.Controllers
             return response;
         }
 
+        [Authorize(Roles = "user")]
         [HttpPost]
         public async Task<IActionResult> AddAsync([FromBody] ApartmentAddOrUpdateModel apartmentAddOrUpdateModel)
         {
@@ -61,6 +65,7 @@ namespace EstateAgency.API.Controllers
             return response;
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateAsync(int? id, [FromBody] ApartmentAddOrUpdateModel apartmentAddOrUpdateModel)
         {
@@ -86,8 +91,9 @@ namespace EstateAgency.API.Controllers
                 return response;
             }
         }
-
-        [HttpDelete]
+        
+        [Authorize(Roles = "admin")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var statusCode = await _apartmentService.DeleteAsync(id);

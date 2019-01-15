@@ -39,7 +39,7 @@ namespace EstateAgency.API.Controllers
         public async Task<IActionResult> Register([FromBody] UserRegisterModel model)
         {
             var identityErrors =
-                await _authentificationService.Register(model.Email, model.Password, model.PasswordConfirm, model.Role);
+                await _authentificationService.Register(model.Email, model.Password, model.PasswordConfirm, model.Roles);
             if (identityErrors.Count() != 0)
             {
                 return BadRequest(identityErrors);

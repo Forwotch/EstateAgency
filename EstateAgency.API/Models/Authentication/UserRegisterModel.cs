@@ -11,9 +11,9 @@ namespace EstateAgency.API.Models.Authentication
         public string Password { get; set; }
 
         [Required]
-        public string Role { get; set; }
+        public string PasswordConfirm { get; set; }
 
         [Required]
-        public string PasswordConfirm { get; set; }
+        public string[] Roles { get; set; }
     }
 }

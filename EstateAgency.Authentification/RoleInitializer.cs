@@ -24,6 +24,7 @@ namespace EstateAgency.Authentification
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(adminUser, "admin");
+                    await userManager.AddToRoleAsync(adminUser, "user");
                 }
             }
         }
