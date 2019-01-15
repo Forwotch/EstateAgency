@@ -17,7 +17,7 @@ namespace EstateAgency.BLL.RentAnnouncements
                 .ForMember(dst => dst.OwnerFirstName, src => src.MapFrom(ra => ra.ApartmentOwner.FirstName))
                 .ForMember(dst => dst.OwnerLastName, src => src.MapFrom(ra => ra.ApartmentOwner.LastName))
                 .ForMember(dst => dst.OwnerPhoneNumber, src => src.MapFrom(ra => ra.ApartmentOwner.PhoneNumber));
-                //.ReverseMap();
+            
             CreateMap<RentAnnouncementDto, RentAnnouncement>()
                 .ForPath(dst => dst.Apartment.Address, src => src.MapFrom(rad => rad.ApartmentAddress))
                 .ForPath(dst => dst.Apartment.Area, src => src.MapFrom(rad => rad.ApartmentArea))

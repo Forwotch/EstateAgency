@@ -6,6 +6,7 @@ using EstateAgency.API.Services.RentAnnouncements;
 using EstateAgency.API.Services.SaleAnnouncements;
 using EstateAgency.Authentification;
 using EstateAgency.Authentification.Services;
+using EstateAgency.BLL.Announcements.Services;
 using EstateAgency.BLL.ApartmentOwners.Services;
 using EstateAgency.BLL.Apartments.Services;
 using EstateAgency.BLL.RentAnnouncements.Services;
@@ -61,11 +62,9 @@ namespace EstateAgency.API
             services.AddScoped<IApartmentOwnerService, ApartmentOwnerService>();
             services.AddScoped<IApartmentOwnerResponseComposer, ApartmentOwnerResponseComposer>();
 
+            services.AddScoped<IAnnouncementService, AnnouncementService>();
+
             services.AddScoped<IAuthentificationService, AuthentificationService>();
-            //services.AddScoped<RoleManager<IdentityRole>>();
-            //services.AddScoped<UserManager<User>>();
-            //services.AddScoped<SignInManager<User>>();
-            //services.AddScoped<IUserStore<User>, UserStore<User>>();
 
             services.AddDbContext<IdentityContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("EstateAgencyAuthentification")));

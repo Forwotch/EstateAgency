@@ -5,6 +5,7 @@ using EstateAgency.DAL.Repositories.RentAnnouncements;
 using EstateAgency.DAL.Repositories.SaleAnnouncements;
 using System;
 using System.Threading.Tasks;
+using EstateAgency.DAL.Repositories.Announcements;
 
 namespace EstateAgency.DAL.UnitOfWork
 {
@@ -70,6 +71,19 @@ namespace EstateAgency.DAL.UnitOfWork
         }
         private IRentAnnouncementRepository _rentAnnouncementRepository;
 
+        public IAnnouncementRepository Announcements
+        {
+            get
+            {
+                if (_announcementRepository == null)
+                {
+                    _announcementRepository = new AnnouncementRepository(_dbContext);
+                }
+                return _announcementRepository;
+            }
+        }
+        private IAnnouncementRepository _announcementRepository;
+
         public void SaveChanges()
         {
             _dbContext.SaveChanges();
@@ -96,6 +110,7 @@ namespace EstateAgency.DAL.UnitOfWork
                 Apartments?.Dispose();
                 SaleAnnouncements?.Dispose();
                 RentAnnouncements?.Dispose();
+                Announcements?.Dispose();
 
                 _dbContext?.Dispose();
             }
