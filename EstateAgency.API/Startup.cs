@@ -40,45 +40,12 @@ namespace EstateAgency.API
         {
             services.AddMvc().AddJsonOptions(option =>
                 option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("EstateAgency")));
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.ResolveDalDependencies(Configuration.GetConnectionString("EstateAgency"));
+            services.ResolveServicesDependencies();
+            services.ResolveIdentityDependencies(Configuration.GetConnectionString("EstateAgencyAuthentification"));
+            services.RegisterSwagger();
 
-            services.AddScoped<IRentAnnouncementService, RentAnnouncementService>();
-            services.AddScoped<IRentAnnouncementResponseComposer, RentAnnouncementResponseComposer>();
-            services.AddScoped<IRentAnnouncementExpressionComposer, RentAnnouncementExpressionComposer>();
-            services.AddScoped<IRentAnnouncementCreator, RentAnnouncementCreator>();
-
-            services.AddScoped<ISaleAnnouncementService, SaleAnnouncementService>();
-            services.AddScoped<ISaleAnnouncementResponseComposer, SaleAnnouncementResponseComposer>();
-            services.AddScoped<ISaleAnnouncementExpressionComposer, SaleAnnouncementExpressionComposer>();
-            services.AddScoped<ISaleAnnouncementCreator, SaleAnnouncementCreator>();
-
-            services.AddScoped<IApartmentService, ApartmentService>();
-            services.AddScoped<IApartmentResponseComposer, ApartmentResponseComposer>();
-            services.AddScoped<IApartmentCreator, ApartmentCreator>();
-
-            services.AddScoped<IApartmentOwnerService, ApartmentOwnerService>();
-            services.AddScoped<IApartmentOwnerResponseComposer, ApartmentOwnerResponseComposer>();
-
-            services.AddScoped<IAnnouncementService, AnnouncementService>();
-
-            services.AddScoped<IAuthentificationService, AuthentificationService>();
-
-            services.AddDbContext<IdentityContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("EstateAgencyAuthentification")));
-
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<IdentityContext>();
-
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options => //CookieAuthenticationOptions
-                {
-                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
-                });
-
-            RegisterSwagger(services);
             services.AddAutoMapper();
         }
 
@@ -96,22 +63,6 @@ namespace EstateAgency.API
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Estate Agency API v1"));
 
             app.UseMvc();
-        }
-
-        public IServiceCollection RegisterSwagger(IServiceCollection services)
-        {
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "Estate Agency API",
-                    Version = "v1"
-                });
-                c.IncludeXmlComments(
-                    @"bin\Debug\netcoreapp2.0\EstateAgency.API.xml");
-            });
-
-            return services;
         }
     }
 }
