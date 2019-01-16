@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using EstateAgency.BLL.ApartmentOwners;
 using EstateAgency.DAL.Entities;
 
 namespace EstateAgency.BLL.Announcements

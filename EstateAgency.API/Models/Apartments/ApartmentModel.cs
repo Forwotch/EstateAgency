@@ -1,7 +1,4 @@
-﻿using System;
-using EstateAgency.API.Models.Announcements;
-
-namespace EstateAgency.API.Models.Apartments
+﻿namespace EstateAgency.API.Models.Apartments
 {
     public class ApartmentModel
     {

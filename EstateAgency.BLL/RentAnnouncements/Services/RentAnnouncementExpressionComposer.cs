@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -8,13 +7,6 @@ namespace EstateAgency.BLL.RentAnnouncements.Services
 {
     public class RentAnnouncementExpressionComposer : IRentAnnouncementExpressionComposer
     {
-        private readonly IMapper _mapper;
-
-        public RentAnnouncementExpressionComposer(IMapper mapper)
-        {
-            _mapper = mapper;
-        }
-
         public Expression<Func<RentAnnouncementDto, bool>> Compose(int? maxPrice, int? numberOfRooms, string adress)
         {
             var expressions = new List<Expression<Func<RentAnnouncementDto, bool>>>();

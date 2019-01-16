@@ -1,6 +1,4 @@
-﻿using System;
-using EstateAgency.BLL.RentAnnouncements;
-using EstateAgency.DAL.Entities;
+﻿using EstateAgency.DAL.Entities;
 
 namespace EstateAgency.BLL.Apartments.Services
 {

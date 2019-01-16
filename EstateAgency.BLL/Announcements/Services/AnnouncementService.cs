@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using EstateAgency.DAL.Entities;
-using EstateAgency.DAL.Repositories.RentAnnouncements;
-using EstateAgency.DAL.Repositories.SaleAnnouncements;
+﻿using AutoMapper;
 using EstateAgency.DAL.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EstateAgency.BLL.Announcements.Services
 {

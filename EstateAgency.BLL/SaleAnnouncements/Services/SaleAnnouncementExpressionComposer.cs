@@ -2,19 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using AutoMapper;
 
 namespace EstateAgency.BLL.SaleAnnouncements.Services
 {
     public class SaleAnnouncementExpressionComposer : ISaleAnnouncementExpressionComposer
     {
-        private readonly IMapper _mapper;
-
-        public SaleAnnouncementExpressionComposer(IMapper mapper)
-        {
-            _mapper = mapper;
-        }
-
         public Expression<Func<SaleAnnouncementDto, bool>> Compose(int? maxPrice, int? numberOfRooms, string adress)
         {
             var expressions = new List<Expression<Func<SaleAnnouncementDto, bool>>>();

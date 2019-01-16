@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using AutoMapper;
-using EstateAgency.BLL.RentAnnouncements;
-using EstateAgency.BLL.RentAnnouncements.Services;
+﻿using AutoMapper;
 using EstateAgency.DAL.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EstateAgency.BLL.Apartments.Services
 {

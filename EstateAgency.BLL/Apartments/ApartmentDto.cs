@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EstateAgency.BLL.Apartments
+﻿namespace EstateAgency.BLL.Apartments
 {
     public class ApartmentDto
     {

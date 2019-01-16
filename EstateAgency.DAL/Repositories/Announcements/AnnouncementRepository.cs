@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using EstateAgency.DAL.EF;
+﻿using EstateAgency.DAL.EF;
 using EstateAgency.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EstateAgency.DAL.Repositories.Announcements
 {

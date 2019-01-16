@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
-using EstateAgency.API.Services;
-using EstateAgency.BLL.RentAnnouncements.Services;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using EstateAgency.API.Models;
 using EstateAgency.API.Models.Announcements;
 using EstateAgency.API.Services.RentAnnouncements;
 using EstateAgency.BLL.RentAnnouncements;
+using EstateAgency.BLL.RentAnnouncements.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace EstateAgency.API.Controllers
 {
@@ -45,7 +43,16 @@ namespace EstateAgency.API.Controllers
             return response;
         }
 
+        /// <summary>
+        /// Finds rent announcements by criteria.
+        /// </summary>
+        /// <param name="maxPrice">Max price in rent announcement</param>
+        /// <param name="numberOfRooms">Number of rooms in rent announcement</param>
+        /// <param name="adress">Adress in rent announcement</param>
+        /// <returns>Returns rent announcement by criteria</returns>
+        /// <response code="200">Always</response>
         [HttpGet]
+        [ProducesResponseType(200)]
         public async Task<IActionResult> FindAsync(int? maxPrice, int? numberOfRooms, string adress)
         {
             var expression = _rentAnnouncementExpressionComposer.Compose(maxPrice, numberOfRooms, adress);
@@ -54,8 +61,17 @@ namespace EstateAgency.API.Controllers
             return response;
         }
 
+        /// <summary>
+        /// Creates rent announcement.
+        /// </summary>
+        /// <param name="rentAnnouncementAddOrUpdateModel">Rent announcement model</param>
+        /// <returns>Returns route to created rent announcement</returns>
+        /// <response code="201">If the item created</response>
+        /// <response code="400">If the model is invalid or contains invalid data</response>
         [Authorize(Roles = "user")]
         [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> AddAsync([FromBody] RentAnnouncementAddOrUpdateModel rentAnnouncementAddOrUpdateModel)
         {
             if (!ModelState.IsValid)
@@ -69,8 +85,17 @@ namespace EstateAgency.API.Controllers
             return response;
         }
 
+        /// <summary>
+        /// Updates rent announcement.
+        /// </summary>
+        /// <param name="id">Rent announcement id</param>
+        /// <param name="rentAnnouncementAddOrUpdateModel">Rent announcement model</param>
+        /// <response code="204">If the item updated</response>
+        /// <response code="400">If the model is invalid or contains invalid data</response>
         [Authorize(Roles = "admin")]
         [HttpPut]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> UpdateAsync(int? id, [FromBody] RentAnnouncementAddOrUpdateModel rentAnnouncementAddOrUpdateModel)
         {
             if (!ModelState.IsValid)
@@ -95,9 +120,17 @@ namespace EstateAgency.API.Controllers
                 return response;
             }
         }
-        
+
+        /// <summary>
+        /// Deletes rent announcement.
+        /// </summary>
+        /// <param name="id">Rent announcement id</param>
+        /// <response code="204">If the item deleted</response>
+        /// <response code="404">If the item not found</response>
         [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Delete(int id)
         {
             var statusCode = await _rentAnnouncementService.DeleteAsync(id);

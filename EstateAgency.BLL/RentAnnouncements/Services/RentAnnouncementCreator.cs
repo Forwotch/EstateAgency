@@ -1,6 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
-using EstateAgency.DAL.Entities;
+﻿using EstateAgency.DAL.Entities;
+using System;
 
 namespace EstateAgency.BLL.RentAnnouncements.Services
 {

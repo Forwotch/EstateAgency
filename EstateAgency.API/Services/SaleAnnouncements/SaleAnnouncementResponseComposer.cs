@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
-using EstateAgency.API.Models;
+﻿using AutoMapper;
 using EstateAgency.API.Models.Announcements;
-using EstateAgency.BLL.RentAnnouncements;
 using EstateAgency.BLL.SaleAnnouncements;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace EstateAgency.API.Services.SaleAnnouncements
 {

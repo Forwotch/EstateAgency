@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EstateAgency.DAL.Entities
+﻿namespace EstateAgency.DAL.Entities
 {
     public class RentAnnouncement : Announcement
     {

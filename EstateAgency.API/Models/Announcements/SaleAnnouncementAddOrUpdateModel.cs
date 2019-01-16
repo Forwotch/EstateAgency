@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EstateAgency.API.Models.Announcements
+﻿namespace EstateAgency.API.Models.Announcements
 {
     public class SaleAnnouncementAddOrUpdateModel
     {

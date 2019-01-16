@@ -1,10 +1,10 @@
-﻿using EstateAgency.DAL.Repositories.ApartmentOwners;
+﻿using EstateAgency.DAL.Repositories.Announcements;
+using EstateAgency.DAL.Repositories.ApartmentOwners;
 using EstateAgency.DAL.Repositories.Apartments;
 using EstateAgency.DAL.Repositories.RentAnnouncements;
 using EstateAgency.DAL.Repositories.SaleAnnouncements;
 using System;
 using System.Threading.Tasks;
-using EstateAgency.DAL.Repositories.Announcements;
 
 namespace EstateAgency.DAL.UnitOfWork
 {

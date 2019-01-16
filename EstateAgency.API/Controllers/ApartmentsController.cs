@@ -1,17 +1,11 @@
 ﻿using AutoMapper;
-using EstateAgency.API.Services;
-using EstateAgency.BLL.RentAnnouncements.Services;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using EstateAgency.API.Models;
-using EstateAgency.API.Models.Announcements;
 using EstateAgency.API.Models.Apartments;
 using EstateAgency.API.Services.Apartments;
-using EstateAgency.API.Services.RentAnnouncements;
 using EstateAgency.BLL.Apartments;
 using EstateAgency.BLL.Apartments.Services;
-using EstateAgency.BLL.RentAnnouncements;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace EstateAgency.API.Controllers
 {
@@ -30,8 +24,14 @@ namespace EstateAgency.API.Controllers
             _apartmentResponseComposer = apartmentResponseComposer;
         }
 
+        /// <summary>
+        /// Gets all apartments.
+        /// </summary>
+        /// <returns>Returns all apartments</returns>
+        /// <response code="200">Always</response>
         [Authorize(Roles = "user")]
         [HttpGet]
+        [ProducesResponseType(200)]
         public async Task<IActionResult> GetAllAsync()
         {
             var apartmentDtos = await _apartmentService.GetAllAsync();
@@ -39,6 +39,13 @@ namespace EstateAgency.API.Controllers
             return response;
         }
 
+        /// <summary>
+        /// Gets apartment by id.
+        /// </summary>
+        /// <param name="id">Apartment id</param>
+        /// <returns>Returns apartment by id</returns>
+        /// <response code="200">If the item exists</response>
+        /// <response code="404">If the item is not found</response>
         [Authorize(Roles = "user")]
         [HttpGet("{id}", Name = "GetApartment")]
         [ProducesResponseType(200)]
@@ -50,8 +57,17 @@ namespace EstateAgency.API.Controllers
             return response;
         }
 
+        /// <summary>
+        /// Creates apartment.
+        /// </summary>
+        /// <param name="apartmentAddOrUpdateModel">Apartment model</param>
+        /// <returns>Returns route to created apartment</returns>
+        /// <response code="201">If the item created</response>
+        /// <response code="400">If the model is invalid or contains invalid data</response>
         [Authorize(Roles = "user")]
         [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> AddAsync([FromBody] ApartmentAddOrUpdateModel apartmentAddOrUpdateModel)
         {
             if (!ModelState.IsValid)
@@ -65,8 +81,17 @@ namespace EstateAgency.API.Controllers
             return response;
         }
 
+        /// <summary>
+        /// Updates apartment.
+        /// </summary>
+        /// <param name="id">Apartment id</param>
+        /// <param name="apartmentAddOrUpdateModel">Apartment model</param>
+        /// <response code="204">If the item updated</response>
+        /// <response code="400">If the model is invalid or contains invalid data</response>
         [Authorize(Roles = "admin")]
         [HttpPut]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> UpdateAsync(int? id, [FromBody] ApartmentAddOrUpdateModel apartmentAddOrUpdateModel)
         {
             if (!ModelState.IsValid)
@@ -91,9 +116,17 @@ namespace EstateAgency.API.Controllers
                 return response;
             }
         }
-        
+
+        /// <summary>
+        /// Deletes apartment.
+        /// </summary>
+        /// <param name="id">Apartment id</param>
+        /// <response code="204">If the item deleted</response>
+        /// <response code="404">If the item not found</response>
         [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Delete(int id)
         {
             var statusCode = await _apartmentService.DeleteAsync(id);

@@ -1,12 +1,11 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using EstateAgency.API.Models.Announcements;
 using EstateAgency.API.Services.SaleAnnouncements;
-using EstateAgency.BLL.RentAnnouncements;
 using EstateAgency.BLL.SaleAnnouncements;
 using EstateAgency.BLL.SaleAnnouncements.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace EstateAgency.API.Controllers
 {
@@ -29,10 +28,10 @@ namespace EstateAgency.API.Controllers
         }
 
         /// <summary>
-        /// Gets rent announcement by id.
+        /// Gets sale announcement by id.
         /// </summary>
-        /// <param name="id">Rent announcement id</param>
-        /// <returns>Returns rent announcement by id</returns>
+        /// <param name="id">Sale announcement id</param>
+        /// <returns>Returns sale announcement by id</returns>
         /// <response code="200">If the item exists</response>
         /// <response code="404">If the item is not found</response>
         [HttpGet("{id}", Name = "GetSaleAnnouncement")]
@@ -45,7 +44,16 @@ namespace EstateAgency.API.Controllers
             return response;
         }
 
+        /// <summary>
+        /// Finds sale announcements by criteria.
+        /// </summary>
+        /// <param name="maxPrice">Max price in sale announcement</param>
+        /// <param name="numberOfRooms">Number of rooms in sale announcement</param>
+        /// <param name="adress">Adress in sale announcement</param>
+        /// <returns>Returns sale announcement by criteria</returns>
+        /// <response code="200">Always</response>
         [HttpGet]
+        [ProducesResponseType(200)]
         public async Task<IActionResult> FindAsync(int? maxPrice, int? numberOfRooms, string adress)
         {
             var expression = _saleAnnouncementExpressionComposer.Compose(maxPrice, numberOfRooms, adress);
@@ -54,8 +62,17 @@ namespace EstateAgency.API.Controllers
             return response;
         }
 
+        /// <summary>
+        /// Creates sale announcement.
+        /// </summary>
+        /// <param name="saleAnnouncementAddOrUpdateModel">Sale announcement model</param>
+        /// <returns>Returns route to created sale announcement</returns>
+        /// <response code="201">If the item created</response>
+        /// <response code="400">If the model is invalid or contains invalid data</response>
         [Authorize(Roles = "user")]
         [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> AddAsync([FromBody] SaleAnnouncementAddOrUpdateModel saleAnnouncementAddOrUpdateModel)
         {
             if (!ModelState.IsValid)
@@ -69,8 +86,17 @@ namespace EstateAgency.API.Controllers
             return response;
         }
 
+        /// <summary>
+        /// Updates sale announcement.
+        /// </summary>
+        /// <param name="id">Sale announcement id</param>
+        /// <param name="saleAnnouncementAddOrUpdateModel">Sale announcement model</param>
+        /// <response code="204">If the item updated</response>
+        /// <response code="400">If the model is invalid or contains invalid data</response>
         [Authorize(Roles = "admin")]
         [HttpPut]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> UpdateAsync(int? id, [FromBody] SaleAnnouncementAddOrUpdateModel saleAnnouncementAddOrUpdateModel)
         {
             if (!ModelState.IsValid)
@@ -96,8 +122,16 @@ namespace EstateAgency.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes sale announcement.
+        /// </summary>
+        /// <param name="id">Sale announcement id</param>
+        /// <response code="204">If the item deleted</response>
+        /// <response code="404">If the item not found</response>
         [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Delete(int id)
         {
             var statusCode = await _saleAnnouncementService.DeleteAsync(id);

@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
 using EstateAgency.API.Models.ApartmentOwners;
-using EstateAgency.API.Models.Apartments;
 using EstateAgency.BLL.ApartmentOwners;
-using EstateAgency.BLL.Apartments;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace EstateAgency.API.Services.ApartmentOwners
 {

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using EstateAgency.DAL.Entities;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using EstateAgency.DAL.Entities;
 
 namespace EstateAgency.DAL.Repositories.Announcements
 {
